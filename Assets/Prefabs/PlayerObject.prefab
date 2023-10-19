@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3491788741993072023}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Orientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1747635969229787467}
   - component: {fileID: 3033938273155524489}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CameraHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 679098324521246183}
   - component: {fileID: 713959188759348311}
   - component: {fileID: 1910301138611961745}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,7 +166,7 @@ MonoBehaviour:
   playerHeight: 2
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 8
   maxSlopeAngle: 40
   orientation: {fileID: 3491788741993072023}
   state: 0
@@ -179,7 +179,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 935051186017305525}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,7 +212,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4191307804303926994}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: CameraPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,7 +246,7 @@ GameObject:
   - component: {fileID: 5152980526290172301}
   - component: {fileID: 662363134171419970}
   - component: {fileID: 235874233310094377}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: PlayerObj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -353,7 +353,7 @@ GameObject:
   - component: {fileID: 1983773253461251580}
   - component: {fileID: 9115654181945293152}
   - component: {fileID: 2864091141757337542}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerCam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -461,6 +461,10 @@ PrefabInstance:
       propertyPath: orientation
       value: 
       objectReference: {fileID: 3491788741993072023}
+    - target: {fileID: 1384172678612164426, guid: e1b17780f80072545a5b9f24a612b3b6, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4591245964812552464, guid: e1b17780f80072545a5b9f24a612b3b6, type: 3}
       propertyPath: cameraPosition
       value: 
@@ -509,6 +513,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CameraHolder
       objectReference: {fileID: 0}
+    - target: {fileID: 8395342887281645520, guid: e1b17780f80072545a5b9f24a612b3b6, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -525,6 +533,22 @@ PrefabInstance:
     - target: {fileID: 2057517062536994066, guid: 748ff0fc275f5ea4195b5f8f2c56b352, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057517062536994066, guid: 748ff0fc275f5ea4195b5f8f2c56b352, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4135772529961067441, guid: 748ff0fc275f5ea4195b5f8f2c56b352, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5420026494334834653, guid: 748ff0fc275f5ea4195b5f8f2c56b352, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7340943633924002034, guid: 748ff0fc275f5ea4195b5f8f2c56b352, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8409193740365237908, guid: 748ff0fc275f5ea4195b5f8f2c56b352, type: 3}
       propertyPath: m_LocalPosition.x
