@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_eyebat_Cartoon
-  m_Shader: {fileID: 4800000, guid: 3e304acfb50351649a51471ec02e7192, type: 3}
+  m_Shader: {fileID: 4800000, guid: 12779ca7a374ca24da44accca8f439a0, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -28,6 +28,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Cubemap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -42,6 +46,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 2800000, guid: 3f118615f7a856d49aa89fb0818a7d6f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissiveTex:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -68,6 +76,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _ReflectionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -84,14 +96,17 @@ Material:
     m_Floats:
     - PixelSnap: 0
     - _BumpScale: 1
+    - _CustomDepthOffset: 0
     - _CutOff: 0.228
     - _Cutoff: 0.021
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _FlatShading: 0
     - _Glossiness: 0.406
     - _LineOffset: -6682
     - _Metallic: 1
     - _Mode: 0
+    - _ObjectDithering: 1
     - _OcclusionStrength: 0.569
     - _Outline: 0.47
     - _OutlineCutoff: 0.71
@@ -102,6 +117,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 0.43692583, g: 0.46323532, b: 0.4359862, a: 1}
+    - _CubemapColor: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0.633, g: 0.633, b: 0.633, a: 1}
     - _OutlineColor: {r: 0.33823532, g: 0.21885814, b: 0.21885814, a: 1}
     - _RimColor: {r: 0.7352941, g: 0.72988755, b: 0.72988755, a: 1}
