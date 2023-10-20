@@ -2378,12 +2378,24 @@ PrefabInstance:
       value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 2864091141757337542, guid: 7ac7f5c0cd6f2fd42abafcd44daaa075, type: 3}
+      propertyPath: sensX
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 2864091141757337542, guid: 7ac7f5c0cd6f2fd42abafcd44daaa075, type: 3}
+      propertyPath: sensY
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 2864091141757337542, guid: 7ac7f5c0cd6f2fd42abafcd44daaa075, type: 3}
       propertyPath: camHolder
       value: 
       objectReference: {fileID: 1481811908}
     - target: {fileID: 4178814860379488421, guid: 7ac7f5c0cd6f2fd42abafcd44daaa075, type: 3}
       propertyPath: m_Name
       value: PlayerObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 4178814860379488421, guid: 7ac7f5c0cd6f2fd42abafcd44daaa075, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
