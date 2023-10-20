@@ -42,15 +42,21 @@ public class Gun : MonoBehaviour
         {
             if (CanShoot())
             {
+                Vector3 targetPoint;
                 if(Physics.Raycast(transform.position + new Vector3(0, 1.25f, 0), transform.forward, out RaycastHit hitInfo, gunData.maxDistance))
                 {
                     IDamageable damageableObject = hitInfo.transform.GetComponent<IDamageable>();
+                    targetPoint = hitInfo.point;
                     damageableObject?.TakeDamage(gunData.damage);
+                }
+                else
+                {
+                    targetPoint = transform.position + new Vector3(0, 1.25f, 0);
                 }
 
                 gunData.currentAmmo--;
                 timeSinceLastShot = 0;
-                OnGunShoot();
+                OnGunShoot(targetPoint);
             }
         }
         else
@@ -64,8 +70,23 @@ public class Gun : MonoBehaviour
         timeSinceLastShot += Time.deltaTime;
     }
 
-    private void OnGunShoot()
+    private void OnGunShoot(Vector3 target)
     {
-        
+        Vector3 directionWithoutSpread = transform.forward;
+
+        // Calculating random spread
+        float x = Random.Range(-gunData.spread, gunData.spread);
+        float y = Random.Range(-gunData.spread, gunData.spread);
+
+        // Adding spread to the direction of the bullet
+        Vector3 directionWithSpread = directionWithoutSpread + new Vector3(x, y, 0);
+
+        // Creating a copy of the bullet object and point it in the direction of the gun
+        GameObject currentBullet = Instantiate(gunData.bullet, transform.position + new Vector3(0, 1.25f, 0), Quaternion.identity);
+        currentBullet.transform.forward = directionWithSpread.normalized;
+
+        // Adding force to the bullet
+        currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * gunData.shootForce, ForceMode.Impulse);
+        currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * gunData.upwardForce, ForceMode.Impulse);
     }
 }

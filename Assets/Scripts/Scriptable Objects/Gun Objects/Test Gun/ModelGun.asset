@@ -14,9 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Model Gun
   damage: 22
-  maxDistance: 200
-  currentAmmo: 0
+  maxDistance: 10
+  spread: 0
+  allowButtonHold: 0
+  bullet: {fileID: 5499187662299559204, guid: 3ba468691d8d3574882e77d2c4901395, type: 3}
+  shootForce: 50
+  upwardForce: 0
+  currentAmmo: 21
   magSize: 31
-  fireRate: 600
+  fireRate: 100
   reloadTime: 1.5
   reloading: 0

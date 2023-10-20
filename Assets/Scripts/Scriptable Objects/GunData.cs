@@ -10,6 +10,13 @@ public class GunData : ScriptableObject
     [Header("Shooting")]
     public float damage;
     public float maxDistance;
+    public float spread;
+    public bool allowButtonHold;
+
+    [Header("Projectiles")]
+    public GameObject bullet;
+    public float shootForce;
+    public float upwardForce;
 
     [Header("Reloading")]
     public int currentAmmo;
