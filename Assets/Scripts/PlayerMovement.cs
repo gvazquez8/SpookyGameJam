@@ -9,9 +9,12 @@ public class PlayerMovement : MonoBehaviour
     private float moveSpeed; // player movement speed
     public float walkSpeed;
     public float sprintSpeed;
+    //sliding
     public float slideSpeed;
     //wall running
     public float wallrunSpeed;
+    //climbing
+    public float climbSpeed; 
 
 
     public float groundDrag; 
@@ -42,12 +45,15 @@ public class PlayerMovement : MonoBehaviour
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
-    bool grounded;
+    public bool grounded;
 
     [Header("Slope Handling")]
     public float maxSlopeAngle;
     private RaycastHit slopeHit;
     private bool exitingSlope; // to allow us to jump on sloped
+
+    [Header("References")]
+    public Climbing climbingScript;
 
     public Transform orientation; // player orientation
 
@@ -65,6 +71,7 @@ public class PlayerMovement : MonoBehaviour
         walking, 
         sprinting, 
         wallrunning,
+        climbing,
         crouching,
         sliding,
         air
@@ -73,6 +80,7 @@ public class PlayerMovement : MonoBehaviour
     // For Sliding Mechanic
     public bool sliding;
     public bool wallrunning;
+    public bool climbing;
 
     // Start is called before the first frame update
     void Start()
@@ -138,8 +146,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void StateHandler () // handles player movespeed state
     {
+        // Mode - Climbing
+        if(climbing)
+        {
+            state = MovementState.climbing;
+            desiredMoveSpeed = climbSpeed;
+        }
+
         // Mode - Wallrunning
-        if(wallrunning)
+        else if(wallrunning)
         {
             state = MovementState.wallrunning;
             desiredMoveSpeed = wallrunSpeed;
@@ -232,6 +247,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer()
     {
+        //if exiting a wall, player cannot move forward
+        if(climbingScript.exitingWall) return;
+        
         // calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
         /* 
