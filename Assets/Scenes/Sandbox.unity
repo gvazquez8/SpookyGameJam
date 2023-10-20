@@ -123,6 +123,34 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &2512989 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3884235994871280703, guid: 7ac7f5c0cd6f2fd42abafcd44daaa075, type: 3}
+  m_PrefabInstance: {fileID: 4067442504137851919}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2512993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2512989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 296ef761b71cf7642a1daacc135ee185, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientation: {fileID: 921105602}
+  PlayerObj: {fileID: 23589965}
+  maxSlideTime: 0.5
+  slideForce: 400
+  slideYScale: 0.5
+  slideKey: 306
+--- !u!4 &23589965 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1790084779359690211, guid: 7ac7f5c0cd6f2fd42abafcd44daaa075, type: 3}
+  m_PrefabInstance: {fileID: 4067442504137851919}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &99057870
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1132,6 +1160,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 225272465265505451, guid: af1ef8d635be24349a5fbc5afb792d6f, type: 3}
   m_PrefabInstance: {fileID: 909084894}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &921105602 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3491788741993072023, guid: 7ac7f5c0cd6f2fd42abafcd44daaa075, type: 3}
+  m_PrefabInstance: {fileID: 4067442504137851919}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &943145697
 GameObject:
@@ -2209,6 +2242,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1910301138611961745, guid: 7ac7f5c0cd6f2fd42abafcd44daaa075, type: 3}
+      propertyPath: crouchKey
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910301138611961745, guid: 7ac7f5c0cd6f2fd42abafcd44daaa075, type: 3}
+      propertyPath: groundDrag
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910301138611961745, guid: 7ac7f5c0cd6f2fd42abafcd44daaa075, type: 3}
+      propertyPath: slideSpeed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910301138611961745, guid: 7ac7f5c0cd6f2fd42abafcd44daaa075, type: 3}
+      propertyPath: sprintSpeed
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910301138611961745, guid: 7ac7f5c0cd6f2fd42abafcd44daaa075, type: 3}
+      propertyPath: slopeIncreaseMultiplier
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1910301138611961745, guid: 7ac7f5c0cd6f2fd42abafcd44daaa075, type: 3}
+      propertyPath: speedIncreaseMultiplier
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4178814860379488421, guid: 7ac7f5c0cd6f2fd42abafcd44daaa075, type: 3}
       propertyPath: m_Name
       value: PlayerObject
@@ -2216,7 +2273,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3884235994871280703, guid: 7ac7f5c0cd6f2fd42abafcd44daaa075, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2512993}
   m_SourcePrefab: {fileID: 100100000, guid: 7ac7f5c0cd6f2fd42abafcd44daaa075, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
