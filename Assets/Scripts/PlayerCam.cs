@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+
 
 public class PlayerCam : MonoBehaviour
 {
@@ -8,6 +10,7 @@ public class PlayerCam : MonoBehaviour
     public float sensY; // detects mouse y-axis sensitivity
 
     public Transform orientation; // players orientation
+    public Transform camHolder;
 
     float xRotation;
     float yRotation; // storing player direction
@@ -37,10 +40,21 @@ public class PlayerCam : MonoBehaviour
         //keeps the camera from looking passed straight up and down
 
         //rotate cam & orientation
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0); // cam up and down
+        camHolder.rotation = Quaternion.Euler(xRotation, yRotation, 0); // cam up and down
         orientation.rotation = Quaternion.Euler(0, yRotation, 0); // Rotates along y axis
         
         /* I think the Unity X axis is the vertical plane while the Y axis is along the horizontal */
         
+    }
+
+    // Camera changed 
+    public void DoFov(float endValue)
+    {
+        GetComponent<Camera>().DOFieldOfView(endValue, 0.25f);
+    }
+
+    public void DoTilt(float zTilt)
+    {
+        transform.DOLocalRotate(new Vector3(0, 0, zTilt), 0.25f);
     }
 }

@@ -10,8 +10,23 @@ public class PlayerMovement : MonoBehaviour
     private float moveSpeed; // player movement speed
     public float walkSpeed;
     public float sprintSpeed;
+    //sliding
+    public float slideSpeed;
+    //wall running
+    public float wallrunSpeed;
+    //climbing
+    public float climbSpeed; 
+    //dashing
+    public float dashSpeed;
 
     public float groundDrag; 
+
+    // Speeding up on slopes
+    private float desiredMoveSpeed;
+    private float lastDesiredMoveSpeed;
+
+    public float speedIncreaseMultiplier;
+    public float slopeIncreaseMultiplier;
 
     [Header("Jumping")]
     public float jumpForce;
@@ -32,12 +47,15 @@ public class PlayerMovement : MonoBehaviour
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
-    bool grounded;
+    public bool grounded;
 
     [Header("Slope Handling")]
     public float maxSlopeAngle;
     private RaycastHit slopeHit;
     private bool exitingSlope; // to allow us to jump on sloped
+
+    [Header("References")]
+    public Climbing climbingScript;
 
     public Transform orientation; // player orientation
 
@@ -54,9 +72,18 @@ public class PlayerMovement : MonoBehaviour
     {
         walking, 
         sprinting, 
+        wallrunning,
+        climbing,
+        dashing,
         crouching,
+        sliding,
         air
     }
+
+    public bool sliding;
+    public bool wallrunning;
+    public bool climbing;
+    public bool dashing;
 
     // Start is called before the first frame update
     void Start()
@@ -77,8 +104,12 @@ public class PlayerMovement : MonoBehaviour
         MyInput();
         SpeedControl();
         StateHandler();
+
+        //DebugSpeed();
+
         // apply drag
-        if(grounded)
+        if(state == MovementState.walking || state == MovementState.sprinting || 
+            state == MovementState.crouching)
             rb.drag = groundDrag;
         else
             rb.drag = 0;
@@ -122,34 +153,116 @@ public class PlayerMovement : MonoBehaviour
 
     private void StateHandler () // handles player movespeed state
     {
+        // Mode - Dashing
+        if(dashing)
+        {
+            state = MovementState.dashing;
+            desiredMoveSpeed = dashSpeed;
+        }
+        // Mode - Climbing
+        else if(climbing)
+        {
+            state = MovementState.climbing;
+            desiredMoveSpeed = climbSpeed;
+        }
+
+        // Mode - Wallrunning
+        else if(wallrunning)
+        {
+            state = MovementState.wallrunning;
+            desiredMoveSpeed = wallrunSpeed;
+        }
+
+        // Mode - Sliding
+        else if(sliding)
+        {  
+            state = MovementState.sliding;
+
+            if(OnSlope() && rb.velocity.y < 0.1f) //if on slope, slideSpeed can increase to higher number
+            {
+                desiredMoveSpeed = slideSpeed;
+                
+            }
+            else
+            {
+                desiredMoveSpeed = sprintSpeed; // else, slide is a quick burst to sprintSpeed
+                
+            }
+        }
         // Mode - Crouching
-        if(Input.GetKey(crouchKey))
+        else if(Input.GetKey(crouchKey))
         {
             state  = MovementState.crouching;
-            moveSpeed = crouchSpeed;
+            desiredMoveSpeed = crouchSpeed;
+            
         }
         // Mode - Sprinting
         else if(grounded && Input.GetKey(sprintKey))
         {
             state  = MovementState.sprinting;
-            moveSpeed = sprintSpeed; 
+            desiredMoveSpeed = sprintSpeed; 
+            
         }
         // Mode - Walking
         else if(grounded)
         {
             state = MovementState.walking;
-            moveSpeed = walkSpeed;
+            desiredMoveSpeed = walkSpeed;
+            
         } 
         // Mode - else
         else 
         {
             state = MovementState.air;
         }
-            
+        // check if desiredMoveSpeed has changed drastically
+        // if the speed is a difference of 6, change instantly, else smooth through Lerp
+        if(Mathf.Abs(desiredMoveSpeed - lastDesiredMoveSpeed) > 6f && moveSpeed != 0)
+        {
+            StopAllCoroutines();
+            StartCoroutine(SmoothlyLerpMoveSpeed());
+        }
+        else
+        {
+            moveSpeed = desiredMoveSpeed;
+        }
+        lastDesiredMoveSpeed = desiredMoveSpeed;
+    }
+
+    private IEnumerator SmoothlyLerpMoveSpeed() // keep momentum
+    {
+        // Smoothly lepr movementSpeed to desired Value
+        float time = 0;
+        float difference = Mathf.Abs(desiredMoveSpeed - moveSpeed);
+        float startValue = moveSpeed;
+
+        //increase player speed based on how steep the slope is
+        while ( time < difference )
+        {
+            moveSpeed = Mathf.Lerp(startValue, desiredMoveSpeed, time / difference);
+
+            if(OnSlope())
+            {
+                float slopeAngle = Vector3.Angle(Vector3.up, slopeHit.normal);
+                float slopeAngleIncrease = 1 + (slopeAngle / 90f);
+
+                time += Time.deltaTime * speedIncreaseMultiplier * slopeIncreaseMultiplier * slopeAngleIncrease;
+            }
+            else
+                time += Time.deltaTime * speedIncreaseMultiplier;
+
+
+            yield return null;
+        }
+
+        moveSpeed = desiredMoveSpeed;
     }
 
     private void MovePlayer()
     {
+        //if exiting a wall, player cannot move forward
+        if(climbingScript.exitingWall) return;
+
         // calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
         /* 
@@ -160,25 +273,26 @@ public class PlayerMovement : MonoBehaviour
         // on slope
         if(OnSlope() && !exitingSlope)
         {
-            rb.AddForce(GetSlopeMovementDirection() * moveSpeed * 20f, ForceMode.Force);
+            rb.AddForce(GetSlopeMovementDirection(moveDirection) * moveSpeed * 20f, ForceMode.Force);
+
             if(rb.velocity.y > 0)
                 rb.AddForce(Vector3.down * 80f, ForceMode.Force);
         }
         // on ground
-        if(grounded)
+        else if(grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
         // on air
         else if(!grounded)
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         
-        // turn off gravity while on slope
-        rb.useGravity = !OnSlope();
+        // turn off gravity while on slope && not wallrunning
+        if(!wallrunning) rb.useGravity = !OnSlope();
     }// this will give player movement
 
     private void SpeedControl()
     {
         // speed limiter on slope
-        if(OnSlope())
+        if(OnSlope() && !exitingSlope)
         {
             if (rb.velocity.magnitude > moveSpeed)
                 rb.velocity = rb.velocity.normalized * moveSpeed;
@@ -189,16 +303,16 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
-        // limit velocity if needed
-        if(flatVel.magnitude > moveSpeed)
-        {
-            Vector3 limitedVel = flatVel.normalized * moveSpeed;
-            rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
-        }
-        /* 
-            if you go faster than your movespeed, you calculate what would be your max movespeed,
-            then apply it
-        */
+            // limit velocity if needed
+            if(flatVel.magnitude > moveSpeed)
+            {
+                Vector3 limitedVel = flatVel.normalized * moveSpeed;
+                rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+            }
+            /* 
+                if you go faster than your movespeed, you calculate what would be your max movespeed,
+                then apply it
+            */
         }
     }
 
@@ -215,7 +329,7 @@ public class PlayerMovement : MonoBehaviour
         exitingSlope = false;
     }
 
-    private bool OnSlope()
+    public bool OnSlope()
     {   
         //sends a raycast down to check if we're on a slope
         if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
@@ -227,8 +341,13 @@ public class PlayerMovement : MonoBehaviour
         return false;
     }
 
-    private Vector3 GetSlopeMovementDirection()
+    public Vector3 GetSlopeMovementDirection(Vector3 direction)
     {
-        return Vector3.ProjectOnPlane(moveDirection, slopeHit.normal).normalized;
+        return Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;
     }
+
+    // private void DebugSpeed()
+    // {
+    //     Debug.Log(Mathf.Abs((rb.velocity.x + rb.velocity.y + rb.velocity.z)).ToString());
+    // }
 }
