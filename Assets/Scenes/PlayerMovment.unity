@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44088745, g: 0.48959738, b: 0.56970143, a: 1}
+  m_IndirectSpecularColor: {r: 0.4428403, g: 0.48521227, b: 0.53517574, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 54782618}
   - component: {fileID: 54782617}
   - component: {fileID: 54782616}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Plane 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -241,7 +241,7 @@ GameObject:
   - component: {fileID: 289767628}
   - component: {fileID: 289767627}
   - component: {fileID: 289767626}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Wall 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -343,7 +343,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 416314205}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Wall Running
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -380,7 +380,7 @@ GameObject:
   - component: {fileID: 460630797}
   - component: {fileID: 460630796}
   - component: {fileID: 460630795}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Wall 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -485,7 +485,7 @@ GameObject:
   - component: {fileID: 498894329}
   - component: {fileID: 498894328}
   - component: {fileID: 498894327}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: LongWall 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -591,7 +591,7 @@ GameObject:
   - component: {fileID: 543598923}
   - component: {fileID: 543598922}
   - component: {fileID: 543598921}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Wall 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -696,7 +696,7 @@ GameObject:
   - component: {fileID: 560352060}
   - component: {fileID: 560352059}
   - component: {fileID: 560352058}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Plane 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -802,7 +802,7 @@ GameObject:
   - component: {fileID: 777894010}
   - component: {fileID: 777894009}
   - component: {fileID: 777894008}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: LongWall 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -908,7 +908,7 @@ GameObject:
   - component: {fileID: 1347314865}
   - component: {fileID: 1347314864}
   - component: {fileID: 1347314863}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: LongWall 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1011,7 +1011,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2014564019}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Wall Climbiing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1048,7 +1048,7 @@ GameObject:
   - component: {fileID: 2028057462}
   - component: {fileID: 2028057461}
   - component: {fileID: 2028057460}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Plane 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1196,7 +1196,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4312646533526488294, guid: 329684abcba6b3e40a3da9b5c565c90a, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5088571344380384888, guid: 329684abcba6b3e40a3da9b5c565c90a, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -1220,7 +1220,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7390570418436198634, guid: 329684abcba6b3e40a3da9b5c565c90a, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7845008440406691257, guid: 329684abcba6b3e40a3da9b5c565c90a, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -1228,7 +1228,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 357c03ec1ed1e6a43a68ba084033bb1c, type: 2}
     - target: {fileID: 8022744096167855977, guid: 329684abcba6b3e40a3da9b5c565c90a, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8604501296568408627, guid: 329684abcba6b3e40a3da9b5c565c90a, type: 3}
       propertyPath: m_Name
@@ -1236,7 +1236,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8604501296568408627, guid: 329684abcba6b3e40a3da9b5c565c90a, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
