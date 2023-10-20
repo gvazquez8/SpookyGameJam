@@ -15,7 +15,8 @@ public class PlayerMovement : MonoBehaviour
     public float wallrunSpeed;
     //climbing
     public float climbSpeed; 
-
+    //dashing
+    public float dashSpeed;
 
     public float groundDrag; 
 
@@ -72,15 +73,16 @@ public class PlayerMovement : MonoBehaviour
         sprinting, 
         wallrunning,
         climbing,
+        dashing,
         crouching,
         sliding,
         air
     }
 
-    // For Sliding Mechanic
     public bool sliding;
     public bool wallrunning;
     public bool climbing;
+    public bool dashing;
 
     // Start is called before the first frame update
     void Start()
@@ -101,8 +103,12 @@ public class PlayerMovement : MonoBehaviour
         MyInput();
         SpeedControl();
         StateHandler();
+
+        //DebugSpeed();
+
         // apply drag
-        if(grounded)
+        if(state == MovementState.walking || state == MovementState.sprinting || 
+            state == MovementState.crouching)
             rb.drag = groundDrag;
         else
             rb.drag = 0;
@@ -146,8 +152,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void StateHandler () // handles player movespeed state
     {
+        // Mode - Dashing
+        if(dashing)
+        {
+            state = MovementState.dashing;
+            desiredMoveSpeed = dashSpeed;
+        }
         // Mode - Climbing
-        if(climbing)
+        else if(climbing)
         {
             state = MovementState.climbing;
             desiredMoveSpeed = climbSpeed;
@@ -161,19 +173,19 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Mode - Sliding
-        if(sliding)
+        else if(sliding)
         {  
             state = MovementState.sliding;
 
             if(OnSlope() && rb.velocity.y < 0.1f) //if on slope, slideSpeed can increase to higher number
             {
                 desiredMoveSpeed = slideSpeed;
-                Debug.Log(rb.velocity.y.ToString());
+                
             }
             else
             {
                 desiredMoveSpeed = sprintSpeed; // else, slide is a quick burst to sprintSpeed
-                Debug.Log(rb.velocity.y.ToString());
+                
             }
         }
         // Mode - Crouching
@@ -181,21 +193,21 @@ public class PlayerMovement : MonoBehaviour
         {
             state  = MovementState.crouching;
             desiredMoveSpeed = crouchSpeed;
-            Debug.Log(rb.velocity.y.ToString());
+            
         }
         // Mode - Sprinting
         else if(grounded && Input.GetKey(sprintKey))
         {
             state  = MovementState.sprinting;
             desiredMoveSpeed = sprintSpeed; 
-            Debug.Log(rb.velocity.y.ToString());
+            
         }
         // Mode - Walking
         else if(grounded)
         {
             state = MovementState.walking;
             desiredMoveSpeed = walkSpeed;
-            Debug.Log(rb.velocity.y.ToString());
+            
         } 
         // Mode - else
         else 
@@ -249,7 +261,7 @@ public class PlayerMovement : MonoBehaviour
     {
         //if exiting a wall, player cannot move forward
         if(climbingScript.exitingWall) return;
-        
+
         // calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
         /* 
@@ -332,4 +344,9 @@ public class PlayerMovement : MonoBehaviour
     {
         return Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;
     }
+
+    // private void DebugSpeed()
+    // {
+    //     Debug.Log(Mathf.Abs((rb.velocity.x + rb.velocity.y + rb.velocity.z)).ToString());
+    // }
 }
