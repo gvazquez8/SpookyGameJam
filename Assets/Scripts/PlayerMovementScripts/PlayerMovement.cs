@@ -58,8 +58,13 @@ public class PlayerMovement : MonoBehaviour
     public float speedBuffAmount;
     public float speedBuffDuration;
     public bool speedPowerUp;
-    
-    private float speedTimer;
+    private float speedBuffTimer;
+    //--
+    public float jumpBuffAmount;
+    public float jumpBuffDuration;
+    public bool jumpPowerUp;
+    private float jumpBuffTimer;
+    //--
 
     [Header("References")]
     public Climbing climbingScript;
@@ -128,6 +133,8 @@ public class PlayerMovement : MonoBehaviour
         MovePlayer();    
 
         if(speedPowerUp)
+            PowerUpTimers();
+        if(jumpPowerUp)
             PowerUpTimers();
     }
 
@@ -367,7 +374,7 @@ public class PlayerMovement : MonoBehaviour
     // Handling the powerUps / player movement buffs ===========================================
     private void PowerUps()
     {
-        if(speedPowerUp && speedTimer <= 0){
+        if(speedPowerUp && speedBuffTimer <= 0){
             // start PowerUp
             Debug.Log("started speedBoost");
             walkSpeed += speedBuffAmount;
@@ -376,23 +383,36 @@ public class PlayerMovement : MonoBehaviour
             wallrunSpeed += speedBuffAmount;
             climbSpeed += speedBuffAmount;
             dashSpeed *= speedBuffAmount;
-            jumpForce += speedBuffAmount;
+            //jumpForce += speedBuffAmount;
             // setTimer
-            speedTimer = speedBuffDuration;
+            speedBuffTimer = speedBuffDuration;
+        }
+
+        if(jumpPowerUp && jumpBuffTimer <= 0)
+        {
+            //start PowerUp
+            Debug.Log("Started jumpBoost");
+            jumpForce += jumpBuffAmount;
+            jumpBuffTimer = jumpBuffDuration;
         }
     }
 
     private void PowerUpTimers()
     {
         if(speedPowerUp)
-            speedTimer -= Time.deltaTime;
+            speedBuffTimer -= Time.deltaTime;
 
-        if(speedTimer <= 0) StopPowerUps();
+        if(speedBuffTimer <= 0) StopPowerUps();
+
+        if(jumpPowerUp)
+            jumpBuffTimer -= Time.deltaTime;
+
+        if(jumpBuffTimer <= 0) StopPowerUps();
     }
 
     private void StopPowerUps()
     {
-        if(speedTimer <= 0) 
+        if(speedBuffTimer <= 0 && speedPowerUp) 
         {
             Debug.Log("Stopped speedBoost");
             speedPowerUp = false;
@@ -402,8 +422,15 @@ public class PlayerMovement : MonoBehaviour
             wallrunSpeed -= speedBuffAmount;
             climbSpeed -= speedBuffAmount;
             dashSpeed += speedBuffAmount;
-            jumpForce -= speedBuffAmount;
+            //jumpForce -= speedBuffAmount;
 
+        }
+
+        if(jumpBuffTimer <= 0 && jumpPowerUp)
+        {
+            Debug.Log("Stopped jumpBoost")
+            jumpPowerUp = false;
+            jumpForce -= jumpBuffAmount;
         }
     }
     // =========================================================================================
