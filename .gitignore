@@ -70,3 +70,13 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Assets that are too big
+/[Aa]ssets/[Dd]estroyed City.meta
+/[Aa]ssets/[Dd]estroyed City/
+/[Aa]ssets/[Ff]loating Islands Envionment.meta
+/[Aa]ssets/[Ff]loating Islands Envionment/
+/[Aa]ssets/[Pp]ack Hell Texture.meta
+/[Aa]ssets/[Pp]ack Hell Texture/
+
+
