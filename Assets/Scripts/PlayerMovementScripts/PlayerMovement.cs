@@ -428,7 +428,7 @@ public class PlayerMovement : MonoBehaviour
 
         if(jumpBuffTimer <= 0 && jumpPowerUp)
         {
-            Debug.Log("Stopped jumpBoost")
+            Debug.Log("Stopped jumpBoost");
             jumpPowerUp = false;
             jumpForce -= jumpBuffAmount;
         }
