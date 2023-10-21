@@ -16,6 +16,8 @@ public class Dashing : MonoBehaviour
     public float dashUpwardForce;
     public float dashDuration;
 
+    public int dashCounter;
+
     [Header("Cooldown")]
     public float dashCd;
     private float dashCdTimer;
@@ -29,6 +31,8 @@ public class Dashing : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         pm = GetComponent<PlayerMovement>();    
+
+        dashCounter = 3;
     }
 
     // Update is called once per frame
@@ -44,10 +48,11 @@ public class Dashing : MonoBehaviour
 
     private void Dash()
     {
-        if(dashCdTimer > 0) return;
+        if(dashCdTimer > 0 || dashCounter == 0) return;
         else dashCdTimer = dashCd;
 
         pm.dashing = true;
+        if(dashCounter > 0) dashCounter--;
 
         Vector3 forceToApply = orientation.forward * dashForce + orientation.up * dashUpwardForce;
         
