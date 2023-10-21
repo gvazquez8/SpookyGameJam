@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+// Credit to: 'Dave / GameDevelopment' on YouTube for this great information and code.
 
 
 public class PlayerCam : MonoBehaviour

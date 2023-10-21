@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+// Credit to: 'Dave / GameDevelopment' on YouTube for this great information and code.
 
 public class Dashing : MonoBehaviour
 {
