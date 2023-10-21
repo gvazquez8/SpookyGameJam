@@ -53,6 +53,13 @@ public class PlayerMovement : MonoBehaviour
     private RaycastHit slopeHit;
     private bool exitingSlope; // to allow us to jump on sloped
 
+    [Header("Power Ups")]
+    public float speedBuffAmount;
+    public float speedBuffDuration;
+    public bool speedPowerUp;
+    
+    private float speedTimer;
+
     [Header("References")]
     public Climbing climbingScript;
 
@@ -103,6 +110,7 @@ public class PlayerMovement : MonoBehaviour
         MyInput();
         SpeedControl();
         StateHandler();
+        PowerUps();
 
         //DebugSpeed();
 
@@ -117,6 +125,9 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate() 
     {
         MovePlayer();    
+
+        if(speedPowerUp)
+            PowerUpTimers();
     }
 
     private void MyInput()
@@ -152,6 +163,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void StateHandler () // handles player movespeed state
     {
+        // Mode - PoweredUp
+
         // Mode - Dashing
         if(dashing)
         {
@@ -207,7 +220,6 @@ public class PlayerMovement : MonoBehaviour
         {
             state = MovementState.walking;
             desiredMoveSpeed = walkSpeed;
-            
         } 
         // Mode - else
         else 
@@ -345,8 +357,53 @@ public class PlayerMovement : MonoBehaviour
         return Vector3.ProjectOnPlane(direction, slopeHit.normal).normalized;
     }
 
-    // private void DebugSpeed()
-    // {
-    //     Debug.Log(Mathf.Abs((rb.velocity.x + rb.velocity.y + rb.velocity.z)).ToString());
-    // }
+    private void DebugSpeed()
+    {
+        Debug.Log(walkSpeed.ToString());
+        //Debug.Log(Mathf.Abs((rb.velocity.x + rb.velocity.y + rb.velocity.z)).ToString());
+    }
+
+    // Handling the powerUps / player movement buffs ===========================================
+    private void PowerUps()
+    {
+        if(speedPowerUp && speedTimer <= 0){
+            // start PowerUp
+            Debug.Log("started speedBoost");
+            walkSpeed += speedBuffAmount;
+            sprintSpeed += speedBuffAmount;
+            slideSpeed += speedBuffAmount;
+            wallrunSpeed += speedBuffAmount;
+            climbSpeed += speedBuffAmount;
+            dashSpeed *= speedBuffAmount;
+            jumpForce += speedBuffAmount;
+            // setTimer
+            speedTimer = speedBuffDuration;
+        }
+    }
+
+    private void PowerUpTimers()
+    {
+        if(speedPowerUp)
+            speedTimer -= Time.deltaTime;
+
+        if(speedTimer <= 0) StopPowerUps();
+    }
+
+    private void StopPowerUps()
+    {
+        if(speedTimer <= 0) 
+        {
+            Debug.Log("Stopped speedBoost");
+            speedPowerUp = false;
+            walkSpeed -= speedBuffAmount;
+            sprintSpeed -= speedBuffAmount;
+            slideSpeed -= speedBuffAmount;
+            wallrunSpeed -= speedBuffAmount;
+            climbSpeed -= speedBuffAmount;
+            dashSpeed += speedBuffAmount;
+            jumpForce -= speedBuffAmount;
+
+        }
+    }
+    // =========================================================================================
 }
