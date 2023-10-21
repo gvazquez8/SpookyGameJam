@@ -88,9 +88,13 @@ GameObject:
   - component: {fileID: 679098324521246183}
   - component: {fileID: 713959188759348311}
   - component: {fileID: 1910301138611961745}
+  - component: {fileID: 7644098742160625614}
+  - component: {fileID: 6406686395507987677}
+  - component: {fileID: 6779724997817082}
+  - component: {fileID: 6443235773026010856}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -154,7 +158,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 7
   sprintSpeed: 12
+  slideSpeed: 30
+  wallrunSpeed: 8.5
+  climbSpeed: 3
+  dashSpeed: 50
   groundDrag: 5
+  speedIncreaseMultiplier: 1.5
+  slopeIncreaseMultiplier: 2.5
   jumpForce: 12
   jumpCooldown: 0.25
   airMultiplier: 0.4
@@ -162,14 +172,26 @@ MonoBehaviour:
   crouchYScale: 0.5
   jumpKey: 32
   sprintKey: 304
-  crouchKey: 306
+  crouchKey: 99
   playerHeight: 2
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
-  maxSlopeAngle: 40
+  grounded: 0
+  maxSlopeAngle: 80
+  speedBuffAmount: 5
+  speedBuffDuration: 10
+  speedPowerUp: 0
+  jumpBuffAmount: 3
+  jumpBuffDuration: 10
+  jumpPowerUp: 0
+  climbingScript: {fileID: 0}
   orientation: {fileID: 3491788741993072023}
   state: 0
+  sliding: 0
+  wallrunning: 0
+  climbing: 0
+  dashing: 0
 --- !u!1 &4178814860379488421
 GameObject:
   m_ObjectHideFlags: 0
@@ -248,7 +270,7 @@ GameObject:
   - component: {fileID: 235874233310094377}
   m_Layer: 6
   m_Name: PlayerObj
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -353,6 +375,7 @@ GameObject:
   - component: {fileID: 1983773253461251580}
   - component: {fileID: 9115654181945293152}
   - component: {fileID: 2864091141757337542}
+  - component: {fileID: 6300717416902781981}
   m_Layer: 6
   m_Name: PlayerCam
   m_TagString: Untagged
@@ -446,9 +469,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 869397fa245fc3047a28c9c513f5fbe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensX: 400
-  sensY: 400
+  sensX: 600
+  sensY: 600
   orientation: {fileID: 3491788741993072023}
+  camHolder: {fileID: 1747635969229787467}
 --- !u!1001 &1634124206743583122
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -520,8 +544,34 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1384172678612164426, guid: e1b17780f80072545a5b9f24a612b3b6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6300717416902781981}
   m_SourcePrefab: {fileID: 100100000, guid: e1b17780f80072545a5b9f24a612b3b6, type: 3}
+--- !u!114 &6300717416902781981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8067871025914820623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 433faa8b758afed4f9295b193c697276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _PixelationFactor: 1
+  _ColorEmulationMode: 3
+  _FullscreenColorDepth: {x: 256, y: 256, z: 256}
+  _FullscreenDitherDepth: {x: 32, y: 32, z: 32}
+  _DitheringMatrixSize: 2
+  _DitheringScale: 1
+  _InterlacingSize: 1
+  _PostProcessShader: {fileID: 4800000, guid: 56d52fd5b7c6911468179e5a7359ce0e, type: 3}
+  _PostProcessShaderAccurate: {fileID: 4800000, guid: 2ebed186567d3c244a87538744a62920, type: 3}
+  _PixelationShader: {fileID: 4800000, guid: f2da0e2a14a532548b5db043244b3df1, type: 3}
+  _InterlacingShader: {fileID: 4800000, guid: 03ebd34214b41ef459d7ee6753b062be, type: 3}
 --- !u!1001 &8089934216706581279
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -546,9 +596,61 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 6599288339300403215, guid: 748ff0fc275f5ea4195b5f8f2c56b352, type: 3}
+      propertyPath: crouchKey
+      value: 99
+      objectReference: {fileID: 0}
+    - target: {fileID: 6599288339300403215, guid: 748ff0fc275f5ea4195b5f8f2c56b352, type: 3}
+      propertyPath: dashSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6599288339300403215, guid: 748ff0fc275f5ea4195b5f8f2c56b352, type: 3}
+      propertyPath: climbSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6599288339300403215, guid: 748ff0fc275f5ea4195b5f8f2c56b352, type: 3}
+      propertyPath: slideSpeed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6599288339300403215, guid: 748ff0fc275f5ea4195b5f8f2c56b352, type: 3}
+      propertyPath: wallrunSpeed
+      value: 8.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6599288339300403215, guid: 748ff0fc275f5ea4195b5f8f2c56b352, type: 3}
+      propertyPath: maxSlopeAngle
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 6599288339300403215, guid: 748ff0fc275f5ea4195b5f8f2c56b352, type: 3}
+      propertyPath: jumpBuffAmount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6599288339300403215, guid: 748ff0fc275f5ea4195b5f8f2c56b352, type: 3}
+      propertyPath: speedBuffAmount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6599288339300403215, guid: 748ff0fc275f5ea4195b5f8f2c56b352, type: 3}
+      propertyPath: jumpBuffDuration
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6599288339300403215, guid: 748ff0fc275f5ea4195b5f8f2c56b352, type: 3}
+      propertyPath: speedBuffDuration
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6599288339300403215, guid: 748ff0fc275f5ea4195b5f8f2c56b352, type: 3}
+      propertyPath: slopeIncreaseMultiplier
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6599288339300403215, guid: 748ff0fc275f5ea4195b5f8f2c56b352, type: 3}
+      propertyPath: speedIncreaseMultiplier
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7340943633924002034, guid: 748ff0fc275f5ea4195b5f8f2c56b352, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7340943633924002034, guid: 748ff0fc275f5ea4195b5f8f2c56b352, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8409193740365237908, guid: 748ff0fc275f5ea4195b5f8f2c56b352, type: 3}
       propertyPath: m_LocalPosition.x
@@ -593,5 +695,118 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2057517062536994066, guid: 748ff0fc275f5ea4195b5f8f2c56b352, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7644098742160625614}
+    - targetCorrespondingSourceObject: {fileID: 2057517062536994066, guid: 748ff0fc275f5ea4195b5f8f2c56b352, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6406686395507987677}
+    - targetCorrespondingSourceObject: {fileID: 2057517062536994066, guid: 748ff0fc275f5ea4195b5f8f2c56b352, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6779724997817082}
+    - targetCorrespondingSourceObject: {fileID: 2057517062536994066, guid: 748ff0fc275f5ea4195b5f8f2c56b352, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6443235773026010856}
   m_SourcePrefab: {fileID: 100100000, guid: 748ff0fc275f5ea4195b5f8f2c56b352, type: 3}
+--- !u!114 &7644098742160625614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3884235994871280703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 296ef761b71cf7642a1daacc135ee185, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientation: {fileID: 3491788741993072023}
+  PlayerObj: {fileID: 1790084779359690211}
+  maxSlideTime: 0.75
+  slideForce: 250
+  slideYScale: 0.5
+  slideKey: 306
+--- !u!114 &6406686395507987677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3884235994871280703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cff39420c8bf5f44f8c02b488d554163, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whatIsWall:
+    serializedVersion: 2
+    m_Bits: 128
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 8
+  wallRunForce: 200
+  wallJumpUpForce: 7
+  wallJumpSideForce: 12
+  wallClimbSpeed: 3
+  maxWallRunTime: 1.5
+  jumpKey: 32
+  upwardsRunKey: 304
+  downwardsRunKey: 306
+  wallCheckDistance: 0.7
+  minJumpHeight: 2
+  exitWallTime: 0.2
+  useGravity: 0
+  gravityCounterForce: 20
+  orientation: {fileID: 3491788741993072023}
+  cam: {fileID: 2864091141757337542}
+--- !u!114 &6779724997817082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3884235994871280703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 985119402a2a84a43bda079a448d4895, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientation: {fileID: 3491788741993072023}
+  rb: {fileID: 713959188759348311}
+  pm: {fileID: 1910301138611961745}
+  whatIsWall:
+    serializedVersion: 2
+    m_Bits: 128
+  climbSpeed: 10
+  maxClimbTime: 0.75
+  climbJumpUpForce: 14
+  climbJumpBackForce: 12
+  jumpKey: 32
+  climbJumps: 1
+  detectionLength: 0.7
+  sphereCastRadius: 0.25
+  maxWallLookAngle: 30
+  minWallNormalChange: 5
+  exitingWall: 0
+  exitWallTime: 0.2
+--- !u!114 &6443235773026010856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3884235994871280703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 709f61c92eed8774ea6c9dc1860abdd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientation: {fileID: 3491788741993072023}
+  playerCam: {fileID: 2162570166264122301}
+  dashForce: 150
+  dashUpwardForce: 1
+  dashDuration: 1
+  dashCounter: 0
+  dashCd: 0.25
+  dashKey: 101
