@@ -118,7 +118,7 @@ public class PlayerMovement : MonoBehaviour
         StateHandler();
         PowerUps();
 
-        //DebugSpeed();
+        DebugSpeed();
 
         // apply drag
         if(state == MovementState.walking || state == MovementState.sprinting || 
@@ -367,8 +367,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void DebugSpeed()
     {
-        Debug.Log(walkSpeed.ToString());
-        //Debug.Log(Mathf.Abs((rb.velocity.x + rb.velocity.y + rb.velocity.z)).ToString());
+        //Debug.Log(walkSpeed.ToString());
+        Debug.Log(Mathf.Round(Mathf.Abs(rb.velocity.x + rb.velocity.y + rb.velocity.z)).ToString());
     }
 
     // Handling the powerUps / player movement buffs ===========================================
