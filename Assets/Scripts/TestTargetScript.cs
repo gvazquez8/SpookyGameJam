@@ -13,6 +13,7 @@ public class TestTargetScript : MonoBehaviour, IDamageable
 
     public void TakeDamage(float damage)
     {
+        Debug.Log("DEALING DAMAGE");
         health -= damage;
         if (health <= 0)
         {
