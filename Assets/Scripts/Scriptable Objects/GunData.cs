@@ -12,6 +12,8 @@ public class GunData : ScriptableObject
     public float maxDistance;
     public float spread;
     public bool allowButtonHold;
+    public int bulletsPerShot;
+    public float nextFireTime;
 
     [Header("Projectiles")]
     public GameObject bullet;
