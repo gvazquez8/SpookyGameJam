@@ -368,7 +368,7 @@ public class PlayerMovement : MonoBehaviour
     private void DebugSpeed()
     {
         //Debug.Log(walkSpeed.ToString());
-        Debug.Log(Mathf.Round(Mathf.Abs(rb.velocity.x + rb.velocity.y + rb.velocity.z)).ToString());
+        // EDIT HERE Debug.Log(Mathf.Round(Mathf.Abs(rb.velocity.x + rb.velocity.y + rb.velocity.z)).ToString());
     }
 
     // Handling the powerUps / player movement buffs ===========================================

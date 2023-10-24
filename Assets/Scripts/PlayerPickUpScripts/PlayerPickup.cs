@@ -55,7 +55,7 @@ public class PlayerPickup : MonoBehaviour
                 Collider collider = rb.GetComponent<Collider>();
                 collider.enabled = false;
                 inHandItem = hit.collider.gameObject;
-                inHandItem.transform.position = new Vector3(0.2f, -0.2f, 0.5f);
+                inHandItem.transform.position = new Vector3(0.0f, -0.2f, 0.5f);
                 inHandItem.transform.rotation = Quaternion.Euler(0, 180, 0);
                 inHandItem.transform.SetParent(pickUpParent.transform, false);
                 

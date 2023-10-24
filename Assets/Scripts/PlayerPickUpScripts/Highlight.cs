@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 // Youtube: Sunny Valey Studio
+// This currently does not work for the weapon
 
 
 public class Highlight : MonoBehaviour

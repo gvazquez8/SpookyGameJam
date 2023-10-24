@@ -7,17 +7,22 @@ public class PlayerShoot : MonoBehaviour
     public static Action reloadInput;
 
     [SerializeField]
+    GameObject weaponSlot;
+    [SerializeField]
     private KeyCode reloadKey;
     private void Update()
     {
-        if(Input.GetMouseButton(0))
+        if (weaponSlot.GetComponent<Transform>()?.childCount != 0)
         {
-            shootInput?.Invoke();
-        }
+            if (Input.GetMouseButton(0))
+            {
+                shootInput?.Invoke();
+            }
 
-        if(Input.GetKeyDown(reloadKey))
-        {
-            reloadInput?.Invoke();
+            if (Input.GetKeyDown(reloadKey))
+            {
+                reloadInput?.Invoke();
+            }
         }
     }
 }
