@@ -329,6 +329,8 @@ GameObject:
   - component: {fileID: 4107771985693238}
   - component: {fileID: 95766226996078928}
   - component: {fileID: -7238957161537716651}
+  - component: {fileID: 4263447791949968082}
+  - component: {fileID: 4985952711224147140}
   m_Layer: 0
   m_Name: eyebat
   m_TagString: Untagged
@@ -344,7 +346,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1433355900633108}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.9708281, z: -0, w: -0.2397767}
+  m_LocalRotation: {x: 0, y: 0.9708276, z: -0, w: -0.23977888}
   m_LocalPosition: {x: -7.7, y: -2.2, z: 15.1}
   m_LocalScale: {x: 0.16, y: 0.16, z: 0.16}
   m_ConstrainProportionsScale: 0
@@ -395,6 +397,40 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 18
   m_Center: {x: 0, y: 23.7, z: 0}
+--- !u!195 &4263447791949968082
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433355900633108}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &4985952711224147140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433355900633108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5000e7f5309754a478d87f9019eacf32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1452314376040498
 GameObject:
   m_ObjectHideFlags: 0
