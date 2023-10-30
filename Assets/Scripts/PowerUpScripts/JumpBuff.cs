@@ -9,5 +9,6 @@ public class JumpBuff : PowerUpEffect
     public override void Apply (GameObject target)
     {
         target.GetComponentInParent<PlayerMovement>().jumpPowerUp = true;
+        target.GetComponentInParent<buffSoundScript>().playSound = true;
     }
 }

@@ -9,6 +9,7 @@ public class MoveSpeedBuff : PowerUpEffect
     public override void Apply(GameObject target)
     {   
         target.GetComponentInParent<PlayerMovement>().speedPowerUp = true;
+        target.GetComponentInParent<buffSoundScript>().playSound = true;
     }
     
 }

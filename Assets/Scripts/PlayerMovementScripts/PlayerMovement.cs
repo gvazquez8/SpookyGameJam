@@ -65,6 +65,7 @@ public class PlayerMovement : MonoBehaviour
     public bool jumpPowerUp;
     private float jumpBuffTimer;
     //--
+    public bool powerUp;
 
     [Header("References")]
     public Climbing climbingScript;
