@@ -76,6 +76,7 @@ public class HumanoidAI : MonoBehaviour
     {
         agent.updateRotation = false;
         InvokeRepeating("UpdateDestination", 0f, 0.1f);
+        UpdateDestination();
 
     }
 
